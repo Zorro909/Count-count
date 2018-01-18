@@ -1,8 +1,15 @@
 import discord
-import asyncio
-import re
+import os
+
 
 def main():
+
+    try:
+        token = os.environ['COUNT_DISCORD_TOKEN']
+    except KeyError:
+        print('You must set the environment variable `COUNT_DISCORD_TOKEN` to your bot token.')
+        quit()
+
     client = discord.Client()
 
     @client.event
@@ -14,19 +21,19 @@ def main():
             chnnl += 1
         for server in client.servers:
             srvrs += 1
-        print(' --------------------')
-        print('| Logged in as:' + '      |')
-        print('| ' + client.user.name + '        |')
-        print('|                    |')
-        print('| Bot ID:' + '            |')
-        print('| ' + client.user.id + ' |')
-        print('|                    |')
-        print('| Servers:' + '           |')
-        print('| ' + str(srvrs) + '                  |')
-        print('|                    |')
-        print('| Private Channels:' + '  |')
-        print('| ' + str(chnnl) + '                  |')
-        print(' --------------------')
+        print('┌────────────────────┐')
+        print('│ Logged in as:      │')
+        print('│ ' + client.user.name + (' ' * (19 - len(client.user.name))) + '│')
+        print('│                    │')
+        print('│ Bot ID:            │')
+        print('│ ' + client.user.id + ' │')
+        print('│                    │')
+        print('│ Servers:           │')
+        print('│ ' + str(srvrs) + '                  │')
+        print('│                    │')
+        print('│ Private Channels:  │')
+        print('│ ' + str(chnnl) + '                  │')
+        print('└────────────────────┘')
 
     @client.event
     async def on_message(message):
@@ -114,9 +121,12 @@ def main():
             await client.send_message(message.channel, embed=embed)
             return
 
-    client.run('Token-Here')
+    client.run(token)
+
 
 def logout():
     discord.Client.logout()
 
-main()
+
+if __name__ == '__main__':
+    main()
