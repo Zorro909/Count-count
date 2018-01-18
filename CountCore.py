@@ -21,19 +21,19 @@ def main():
             chnnl += 1
         for server in client.servers:
             srvrs += 1
-        print(' --------------------')
-        print('| Logged in as:' + '      |')
-        print('| ' + client.user.name + (' ' * (19 - len(client.user.name))) + '|')
-        print('|                    |')
-        print('| Bot ID:' + '            |')
-        print('| ' + client.user.id + ' |')
-        print('|                    |')
-        print('| Servers:' + '           |')
-        print('| ' + str(srvrs) + '                  |')
-        print('|                    |')
-        print('| Private Channels:' + '  |')
-        print('| ' + str(chnnl) + '                  |')
-        print(' --------------------')
+        print('┌────────────────────┐')
+        print('│ Logged in as:' + '      │')
+        print('│ ' + client.user.name + (' ' * (19 - len(client.user.name))) + '│')
+        print('│                    │')
+        print('│ Bot ID:' + '            │')
+        print('│ ' + client.user.id + ' │')
+        print('│                    │')
+        print('│ Servers:' + '           │')
+        print('│ ' + str(srvrs) + '                  │')
+        print('│                    │')
+        print('│ Private Channels:' + '  │')
+        print('│ ' + str(chnnl) + '                  │')
+        print('└────────────────────┘')
 
     @client.event
     async def on_message(message):
