@@ -1,7 +1,10 @@
 import discord
 import os
 
+<<<<<<< HEAD
 import ConsoleBox
+=======
+>>>>>>> cdcd328a081398a6c09517b4c012845f8272f0b9
 
 def main():
 
@@ -11,6 +14,11 @@ def main():
         print('You must set the environment variable `COUNT_DISCORD_TOKEN` to your bot token.')
         quit()
 
+<<<<<<< HEAD
+=======
+    dir_path = os.path.join(os.path.realpath(__file__))
+
+>>>>>>> cdcd328a081398a6c09517b4c012845f8272f0b9
     client = discord.Client()
 
     @client.event
@@ -22,6 +30,7 @@ def main():
             chnnl += 1
         for server in client.servers:
             srvrs += 1
+<<<<<<< HEAD
 
         box = ConsoleBox.Box()
         box.add_field('Logged in as:')\
@@ -36,6 +45,21 @@ def main():
             .add_field('Private Channels:')\
             .add_field(str(chnnl))
         print(box.generate_box())
+=======
+        print('┌────────────────────┐')
+        print('│ Logged in as:      │')
+        print('│ ' + client.user.name + (' ' * (19 - len(client.user.name))) + '│')
+        print('│                    │')
+        print('│ Bot ID:            │')
+        print('│ ' + client.user.id + ' │')
+        print('│                    │')
+        print('│ Servers:           │')
+        print('│ ' + str(srvrs) + '                  │')
+        print('│                    │')
+        print('│ Private Channels:  │')
+        print('│ ' + str(chnnl) + '                  │')
+        print('└────────────────────┘')
+>>>>>>> cdcd328a081398a6c09517b4c012845f8272f0b9
 
     @client.event
     async def on_message(message):
@@ -100,12 +124,12 @@ def main():
                 return
 
         if message.content.startswith('=count'):
-            with open("iteration.txt", "r") as text_file:
+            with open(os.path.join(dir_path, "iteration.txt",) "r") as text_file:
                 data=text_file.read()
             count = int(data)
             count += 1
             text_file.close()
-            with open("iteration.txt", "w") as text_file:
+            with open(os.path.join(dir_path, "iteration.txt"), "w") as text_file:
                 text_file.write(str(count))
             text_file.close()
             await client.send_message(message.channel, str(count))
