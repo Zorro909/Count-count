@@ -1,8 +1,14 @@
 import discord
-import asyncio
-import re
+import os
 
 def main():
+
+    try:
+        token = os.environ['COUNT_DISCORD_TOKEN']
+    except KeyError:
+        print('You must set the environment variable `COUNT_DISCORD_TOKEN` to your bot token.')
+        quit()
+
     client = discord.Client()
 
     @client.event
@@ -114,7 +120,7 @@ def main():
             await client.send_message(message.channel, embed=embed)
             return
 
-    client.run('Token-Here')
+    client.run(token)
 
 def logout():
     discord.Client.logout()
