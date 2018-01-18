@@ -22,7 +22,7 @@ def main():
             srvrs += 1
         print(' --------------------')
         print('| Logged in as:' + '      |')
-        print('| ' + client.user.name + '        |')
+        print('| ' + client.user.name + (' ' * (19 - len(client.user.name))) + '|')
         print('|                    |')
         print('| Bot ID:' + '            |')
         print('| ' + client.user.id + ' |')
