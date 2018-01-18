@@ -1,10 +1,7 @@
 import discord
 import os
 
-<<<<<<< HEAD
 import ConsoleBox
-=======
->>>>>>> cdcd328a081398a6c09517b4c012845f8272f0b9
 
 def main():
 
@@ -14,11 +11,8 @@ def main():
         print('You must set the environment variable `COUNT_DISCORD_TOKEN` to your bot token.')
         quit()
 
-<<<<<<< HEAD
-=======
     dir_path = os.path.join(os.path.realpath(__file__))
 
->>>>>>> cdcd328a081398a6c09517b4c012845f8272f0b9
     client = discord.Client()
 
     @client.event
@@ -30,7 +24,6 @@ def main():
             chnnl += 1
         for server in client.servers:
             srvrs += 1
-<<<<<<< HEAD
 
         box = ConsoleBox.Box()
         box.add_field('Logged in as:')\
@@ -45,21 +38,6 @@ def main():
             .add_field('Private Channels:')\
             .add_field(str(chnnl))
         print(box.generate_box())
-=======
-        print('┌────────────────────┐')
-        print('│ Logged in as:      │')
-        print('│ ' + client.user.name + (' ' * (19 - len(client.user.name))) + '│')
-        print('│                    │')
-        print('│ Bot ID:            │')
-        print('│ ' + client.user.id + ' │')
-        print('│                    │')
-        print('│ Servers:           │')
-        print('│ ' + str(srvrs) + '                  │')
-        print('│                    │')
-        print('│ Private Channels:  │')
-        print('│ ' + str(chnnl) + '                  │')
-        print('└────────────────────┘')
->>>>>>> cdcd328a081398a6c09517b4c012845f8272f0b9
 
     @client.event
     async def on_message(message):
