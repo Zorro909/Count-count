@@ -10,6 +10,8 @@ def main():
         print('You must set the environment variable `COUNT_DISCORD_TOKEN` to your bot token.')
         quit()
 
+    dir_path = os.path.join(os.path.realpath(__file__))
+
     client = discord.Client()
 
     @client.event
@@ -98,12 +100,12 @@ def main():
                 return
 
         if message.content.startswith('=count'):
-            with open("iteration.txt", "r") as text_file:
+            with open(os.path.join(dir_path, "iteration.txt",) "r") as text_file:
                 data=text_file.read()
             count = int(data)
             count += 1
             text_file.close()
-            with open("iteration.txt", "w") as text_file:
+            with open(os.path.join(dir_path, "iteration.txt"), "w") as text_file:
                 text_file.write(str(count))
             text_file.close()
             await client.send_message(message.channel, str(count))
