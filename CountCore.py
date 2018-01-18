@@ -1,6 +1,7 @@
 import discord
 import os
 
+import ConsoleBox
 
 def main():
 
@@ -23,19 +24,20 @@ def main():
             chnnl += 1
         for server in client.servers:
             srvrs += 1
-        print('┌────────────────────┐')
-        print('│ Logged in as:      │')
-        print('│ ' + client.user.name + (' ' * (19 - len(client.user.name))) + '│')
-        print('│                    │')
-        print('│ Bot ID:            │')
-        print('│ ' + client.user.id + ' │')
-        print('│                    │')
-        print('│ Servers:           │')
-        print('│ ' + str(srvrs) + '                  │')
-        print('│                    │')
-        print('│ Private Channels:  │')
-        print('│ ' + str(chnnl) + '                  │')
-        print('└────────────────────┘')
+
+        box = ConsoleBox.Box()
+        box.add_field('Logged in as:')\
+            .add_field(client.user.name)\
+            .add_empty()\
+            .add_field('Bot ID:')\
+            .add_field(client.user.id)\
+            .add_empty()\
+            .add_field('Servers:')\
+            .add_field(str(srvrs))\
+            .add_empty()\
+            .add_field('Private Channels:')\
+            .add_field(str(chnnl))
+        print(box.generate_box())
 
     @client.event
     async def on_message(message):
@@ -54,7 +56,7 @@ def main():
             async for msg in client.logs_from(message.channel, limit=500000):
                 if msg.author == message.author:
                     counter += 1
-                if  (counter % 1000 == 0):
+                if counter % 1000 == 0:
                     await client.edit_message(calc, "{} has {} messages in #{}".format(message.author, str(counter), message.channel))
             await client.send_message(message.channel, message.author.mention + 'Counting done, final amount: `{}`'.format(str(counter)))
             return
@@ -100,7 +102,7 @@ def main():
                 return
 
         if message.content.startswith('=count'):
-            with open(os.path.join(dir_path, "iteration.txt",) "r") as text_file:
+            with open(os.path.join(dir_path, "iteration.txt"), "r") as text_file:
                 data=text_file.read()
             count = int(data)
             count += 1
