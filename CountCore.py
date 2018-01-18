@@ -102,7 +102,7 @@ def main():
                 return
 
         if message.content.startswith('=count'):
-            with open(os.path.join(dir_path, "iteration.txt",) "r") as text_file:
+            with open(os.path.join(dir_path, "iteration.txt"), "r") as text_file:
                 data=text_file.read()
             count = int(data)
             count += 1
