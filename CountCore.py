@@ -1,6 +1,7 @@
 import discord
 import os
 
+
 def main():
 
     try:
@@ -122,7 +123,10 @@ def main():
 
     client.run(token)
 
+
 def logout():
     discord.Client.logout()
 
-main()
+
+if __name__ == '__main__':
+    main()
