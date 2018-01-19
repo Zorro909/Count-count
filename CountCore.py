@@ -63,7 +63,8 @@ def main():
 
         if message.content.startswith('=fetch'):
             fetch_target = message.mentions[0] if message.mentions else message.author
-            embed = discord.Embed(title="I'm busy counting~")
+            dp_name = str(fetch_target)[:-5]
+            embed = discord.Embed(title="I'm busy counting~", color=0x9975b9)
             calc = await client.send_message(message.channel, embed=embed)
             counter = 0
             Ctotal = 0
@@ -76,16 +77,16 @@ def main():
                 sum3 = round(sum2, 2)
                 if  (Ctotal % 5000 == 0):
                     embed2 = discord.Embed(title="I'm busy counting~", color=0xff0000)
-                    embed2.set_author(name=fetch_target, icon_url=fetch_target.avatar_url)
+                    embed2.set_author(name=dp_name, icon_url=fetch_target.avatar_url)
                     embed2.add_field(name="Total messages counted:", value="{} messages so far".format(Ctotal), inline=False)
-                    embed2.add_field(name="Messages of {}:".format(fetch_target), value="{} messages".format(counter), inline=False)
+                    embed2.add_field(name="Messages of {}:".format(dp_name), value="{} messages".format(counter), inline=False)
                     embed2.add_field(name="Your message participation percentage:", value="{}%".format(sum3), inline=False)
                     embed2.set_footer(text="counting done soonTM")
                     await client.edit_message(calc, embed=embed2)
             embed3 = discord.Embed(title="I'm done counting!", color=0x00ff00)
-            embed3.set_author(name=fetch_target, icon_url=fetch_target.avatar_url)
+            embed3.set_author(name=dp_name, icon_url=fetch_target.avatar_url)
             embed3.add_field(name="Total messages counted:", value="{} messages".format(Ctotal), inline=False)
-            embed3.add_field(name="Messages of {}:".format(fetch_target), value="{} messages".format(counter), inline=False)
+            embed3.add_field(name="Messages of {}:".format(dp_name), value="{} messages".format(counter), inline=False)
             embed3.add_field(name="Your message participation percentage:", value="{}%".format(sum3), inline=False)
             embed3.set_footer(text="counting done!")
             await client.delete_message(calc)
@@ -114,8 +115,9 @@ def main():
             return
 
         if message.content.startswith('=help'):
-            embed = discord.Embed(title="The commands so far:", color=0xff0000)
-            embed.set_author(name=message.author, icon_url=message.author.avatar_url)
+            dp_name = str(message.author)[:-5]
+            embed = discord.Embed(title="The commands so far:", color=0x9975b9)
+            embed.set_author(name=dp_name, icon_url=message.author.avatar_url)
             embed.add_field(name="=fetch", value="Fetches all your messages in this channel, and shows some statistics", inline=True)
             embed.add_field(name="=count", value="Globally count with people from other servers! \n_increases the count everytime someone runs \"=count\"_", inline=True)
             #embed.add_field(name="=fetch1 (depricated)", value="This command looks through the entire channel history and shows you your total messages send (faster)", inline=True)
