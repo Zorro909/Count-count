@@ -11,7 +11,7 @@ def main():
         print('You must set the environment variable `COUNT_DISCORD_TOKEN` to your bot token.')
         quit()
 
-    dir_path = os.path.join(os.path.realpath(__file__))
+    dir_path = os.path.dirname(os.path.realpath(__file__))
 
     client = discord.Client()
 
