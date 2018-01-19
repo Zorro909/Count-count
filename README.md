@@ -11,4 +11,4 @@ this whole thing is a mess.
 * alot
 
 # Discord
-As always, everyone is feel to join my [Discord Server](https://discord.gg/sbZgha2)
+As always, feel free to join my [Discord Server](https://discord.gg/sbZgha2)
