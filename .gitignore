@@ -49,3 +49,4 @@ Temporary Items
 # Misc
 ignore
 ignore.py
+__pycache__/
