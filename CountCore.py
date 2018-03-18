@@ -1,7 +1,11 @@
 import discord
 import os
+import asyncio
+import time
 
 import ConsoleBox
+
+last = 0
 
 def main():
 
@@ -39,6 +43,24 @@ def main():
             .add_field(str(chnnl))
         print(box.generate_box())
 
+    #These 3 Functions send or edit Messages completely asynchronously without blocking the working thread
+    def sendMess(client, channel, message):
+        #ensure_future runs the function asynchronously
+        asyncio.ensure_future(client.send_message(channel,message))
+
+    #These 2 only work every 3 seconds to not trigger the API Limits
+    def editMess(client, origM, message):
+        global last
+        if(last<time.time()-2):
+          asyncio.ensure_future(client.edit_message(origM, message))
+          last = time.time()
+
+    def editMessEmbed(client, origM, embed):
+        global last
+        if(last<time.time()-2):
+          asyncio.ensure_future(client.edit_message(origM, embed=embed))
+          last = time.time()
+
     @client.event
     async def on_message(message):
         if message.content.startswith('=fetch1'):
@@ -51,14 +73,17 @@ def main():
             return
 
         if message.content.startswith('=fetch2'):
+            fetch_target = message.mentions[0] if message.mentions else message.author
             calc = await client.send_message(message.channel, 'You can Count on Count Count to Count your messages!')
             counter = 0
+            prevCounter = 0
             async for msg in client.logs_from(message.channel, limit=500000):
-                if msg.author == message.author:
+                if msg.author == fetch_target:
                     counter += 1
-                if counter % 1000 == 0:
-                    await client.edit_message(calc, "{} has {} messages in #{}".format(message.author, str(counter), message.channel))
-            await client.send_message(message.channel, message.author.mention + 'Counting done, final amount: `{}`'.format(str(counter)))
+                if counter % 100 == 0 and prevCounter!=counter:
+                    prevCounter = counter
+                    editMess(client,calc, "{} has {} messages in #{}".format(fetch_target, str(counter), message.channel))
+            sendMess(client,message.channel, message.author.mention + 'Counting done, final amount: `{}`'.format(str(counter)))
             return
 
         if message.content.startswith('=fetch'):
@@ -75,14 +100,14 @@ def main():
                 sum = Ctotal / 100
                 sum2 = counter / sum
                 sum3 = round(sum2, 2)
-                if  (Ctotal % 5000 == 0):
+                if  (Ctotal % 100 == 0):
                     embed2 = discord.Embed(title="I'm busy counting~", color=0xff0000)
                     embed2.set_author(name=dp_name, icon_url=fetch_target.avatar_url)
                     embed2.add_field(name="Total messages counted:", value="{} messages so far".format(Ctotal), inline=False)
                     embed2.add_field(name="Messages of {}:".format(dp_name), value="{} messages".format(counter), inline=False)
                     embed2.add_field(name="Your message participation percentage:", value="{}%".format(sum3), inline=False)
                     embed2.set_footer(text="counting done soonTM")
-                    await client.edit_message(calc, embed=embed2)
+                    editMessEmbed(client,calc, embed2)
             embed3 = discord.Embed(title="I'm done counting!", color=0x00ff00)
             embed3.set_author(name=dp_name, icon_url=fetch_target.avatar_url)
             embed3.add_field(name="Total messages counted:", value="{} messages".format(Ctotal), inline=False)
