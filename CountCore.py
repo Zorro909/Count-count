@@ -125,7 +125,7 @@ def main():
                 if msg.author == client.user:
                     counter += 1
                 await client.send_message(message.channel, counter)
-                return
+            return
 
         if message.content.startswith('=count'):
             with open(os.path.join(dir_path, "iteration.txt"), "r") as text_file:
